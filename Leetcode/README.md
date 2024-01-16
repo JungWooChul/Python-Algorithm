@@ -1,4 +1,4 @@
 ### description.
 
 -   leethub 사용을 위한 repository 분할.
--   Link : https://github.com/JungWooChul/Python-Algorithm/Leetcode
+-   Link : https://github.com/JungWooChul/Leetcode
