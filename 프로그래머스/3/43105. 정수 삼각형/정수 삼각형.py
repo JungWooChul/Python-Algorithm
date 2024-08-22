@@ -10,12 +10,10 @@ def solution(triangle):
         for j in range(len(dp[i])):
             if j < i:
                 tmp = triangle[i][j] + dp[i-1][j]
-                if dp[i][j] < tmp:
-                    dp[i][j] = tmp
+                dp[i][j] = max(dp[i][j],tmp)
             if j > 0:
                 tmp = triangle[i][j] + dp[i-1][j-1]
-                if dp[i][j] < tmp:
-                    dp[i][j] = tmp
+                dp[i][j] = max(dp[i][j],tmp)
     return max(dp[-1])
                 
                 
