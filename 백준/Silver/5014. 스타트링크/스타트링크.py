@@ -12,16 +12,17 @@ def main():
     answer = 0
     while queue:
         x = queue.popleft()
+        if x == G:
+            print(discovered[x]-1)
+            return
         for dx in [U, -D]:
             nx = x+dx
             if 0<nx<=F and not discovered[nx]:
                 discovered[nx] = discovered[x]+1
                 queue.append(nx)
 
-    if not discovered[G]:
-        print("use the stairs")
-        return
-    print(discovered[G]-1)
+    
+    print("use the stairs")
     return
-
+    
 main()
