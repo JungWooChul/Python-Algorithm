@@ -36,31 +36,32 @@ print(f)                                문자열 1개 출력하는 예제
 #import sys
 #sys.stdin = open("input.txt", "r")
 
-def find_number(arr):
-    dx = [0, 0, 1, -1]
-    dy = [1, -1, 0, 0]
+from collections import deque
 
-    number_set = set()
-    def dfs(x,y,number):
-        if len(number) == 7:
-            number_set.add(number)
-            return
-
-        for i in range(4):
-            nx = x+dx[i]
-            ny = y+dy[i]
-            if 0<=nx<4 and 0<=ny<4:
-                dfs(nx, ny, number+arr[x][y])
-
-    for i in range(len(arr)):
-        for j in range(len(arr[0])):
-            dfs(i,j,"")
-
-    return len(number_set)
 T = int(input())
-# 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
 for test_case in range(1, T + 1):
-    # ///////////////////////////////////////////////////////////////////////////////////
-    arr = [list(map(str, input().split())) for _ in range(4)]
-    print(f'#{test_case} {find_number(arr)}')
-    # ///////////////////////////////////////////////////////////////////////////////////
+    arr = [list(map(str, input().strip().split())) for _ in range(4)]
+    answer = set()
+
+    for i in range(4):
+        for j in range(4):
+            queue = deque([(arr[i][j],i,j)])
+            while queue:
+                number,x,y = queue.popleft()
+                for idx in range(4):
+                    nx = x + dx[idx]
+                    ny = y + dy[idx]
+                    if nx<0 or ny<0 or nx>=4 or ny>=4:
+                        continue
+                    else:
+                        tmp=number+arr[nx][ny]
+                        if len(tmp)==7:
+                            answer.add(tmp)
+                        else:
+                            queue.append((tmp,nx,ny))
+            
+    print(f'#{test_case} {len(answer)}')
