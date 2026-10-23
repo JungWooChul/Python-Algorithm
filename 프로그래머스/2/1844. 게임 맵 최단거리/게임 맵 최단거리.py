@@ -1,21 +1,21 @@
 from collections import deque
 def solution(maps):
-    visited = [[False]*len(maps[0]) for _ in range(len(maps))]
-    
-    # 상, 하, 좌, 우
-    dx = [-1, 1, 0, 0]
-    dy = [0, 0, -1, 1]
-    
-    queue = deque()
-    queue.append((0,0))
-    
+    directions = [
+        (0, 1),   # 오른쪽
+        (0, -1),  # 왼쪽
+        (1, 0),   # 아래
+        (-1, 0)   # 위
+    ]
+    visited = [[-1]*len(maps[0]) for _ in range(len(maps))]
     visited[0][0] = 1
+    queue = deque([(0,0)])
     while queue:
         x,y = queue.popleft()
-        for i in range(4):
-            nx, ny = x+dx[i], y+dy[i]
-            if (0 <= nx < len(maps)) and (0 <= ny < len(maps[0])) and maps[nx][ny]!=0 and not visited[nx][ny]:
-                visited[nx][ny] = visited[x][y]+1
-                queue.append((nx,ny))
-    
-    return -1 if not visited[-1][-1] else visited[-1][-1]
+        if x == len(maps)-1 and y == len(maps[0])-1:
+            return visited[x][y]
+        for dx,dy in directions:
+            if (0 <= x+dx < len(maps)) and (0 <= y+dy < len(maps[0])) and maps[x+dx][y+dy] == 1 and visited[x+dx][y+dy] == -1:
+                visited[x+dx][y+dy] = visited[x][y] + 1
+                queue.append([x+dx,y+dy])
+    print(visited)
+    return visited[len(maps)-1][len(maps[0])-1]
